@@ -41,7 +41,7 @@ python keylogger.py
 Para visualizar los registros cifrados, usa el siguiente comando:
 
 ```sh
-python decrypt_logs.py
+python logs_utils.py
 ```
 
 E introduce el nombre del archivo de log a descifrar cuando se solicite.
