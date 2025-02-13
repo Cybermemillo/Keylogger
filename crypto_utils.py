@@ -6,25 +6,25 @@ from Crypto.Protocol.KDF import PBKDF2
 
 # Configuración
 KEY_FILE = "forensic_key.json"
-SALT_SIZE = 16  # Tamaño del SALT
+SALT_SIZE = 16
 ITERATIONS = 100000
-AES_KEY_SIZE = 32  # AES-256
+AES_KEY_SIZE = 32
 
 def get_or_create_key():
-    """ Genera una clave AES-256 única y persistente con un SALT aleatorio """
+    """
+    Obtiene la clave AES segura almacenada en "forensic_key.json", o la genera si no existe.
+    
+    :return: Una tupla (clave AES, SALT)
+    """
+    
     if os.path.exists(KEY_FILE):
         with open(KEY_FILE, "r") as f:
             key_data = json.load(f)
             salt = base64.b64decode(key_data["salt"])
             key = base64.b64decode(key_data["key"])
             return key, salt
-
-    # Generar SALT aleatorio
     salt = os.urandom(SALT_SIZE)
-    # Generar clave AES-256 usando PBKDF2
     key = PBKDF2(os.urandom(32), salt, dkLen=AES_KEY_SIZE, count=ITERATIONS)
-
-    # Guardar clave y SALT en archivo seguro
     with open(KEY_FILE, "w") as f:
         json.dump({
             "salt": base64.b64encode(salt).decode(),
@@ -34,13 +34,29 @@ def get_or_create_key():
     return key, salt
 
 def encrypt_data(data, key):
-    """ Cifra datos con AES-256 en modo EAX """
+    """
+    Encripta el texto plano "data" con la clave AES "key" y devuelve el resultado
+    como una cadena codificada en base64.
+
+    :param data: Texto plano a encriptar.
+    :param key: Clave AES segura.
+    :return: Texto cifrado en base64.
+    """
     cipher = AES.new(key, AES.MODE_EAX)
     ciphertext, tag = cipher.encrypt_and_digest(data.encode())
     return base64.b64encode(cipher.nonce + tag + ciphertext).decode()
 
 def decrypt_data(encrypted_data, key):
-    """ Descifra datos con AES-256 en modo EAX """
+    """
+    Descifra el texto cifrado "encrypted_data" utilizando la clave AES "key" y devuelve
+    el texto plano original.
+
+    :param encrypted_data: Texto cifrado en base64 a descifrar.
+    :param key: Clave AES segura utilizada para el descifrado.
+    :return: Texto plano original descifrado.
+    :raises ValueError: Si la autenticación del mensaje falla.
+    """
+
     data = base64.b64decode(encrypted_data)
     nonce, tag, ciphertext = data[:16], data[16:32], data[32:]
     cipher = AES.new(key, AES.MODE_EAX, nonce=nonce)

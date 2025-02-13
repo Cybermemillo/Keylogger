@@ -1,5 +1,0 @@
-DEBUG:root:Starting keylogger
-ERROR:root:Unhandled exception: You must be root to use this library on linux.
-DEBUG:root:Keylogger stopped
-DEBUG:root:Starting keylogger
-ERROR:root:Error enviando correo: [Errno 21] Is a directory: 'logs/logs'

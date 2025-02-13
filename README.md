@@ -54,8 +54,6 @@ E introduce el nombre del archivo de log a descifrar cuando se solicite.
 
 ## Posibles Futuras Mejoras
 
-- Agregar una opción de inicio y detención manual del keylogger.
-- Registrar solo teclas alfanuméricas para reducir el ruido en los logs.
 - Implementar un sistema de logs más legible con formato JSON.
 - Añadir mensajes de estado en la consola para mejor seguimiento de la ejecución.
 - Enviar alertas de comportamiento sospechoso a Telegram

