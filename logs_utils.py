@@ -7,13 +7,14 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 
 def listar_logs():
     """
-    Listar los archivos de log en el directorio "Keylogger/logs" en orden cronol gico
-    inverso y mostrar su informaci n por pantalla. Devuelve una lista de tuplas
+    Listar los archivos de log en el directorio "Keylogger/logs" en orden cronológico
+    inverso y mostrar su información por pantalla. Devuelve una lista de tuplas
     (archivo, fecha_modificación) con la información de cada archivo.
 
     :return: lista de tuplas (archivo, fecha_modificación)
     """
-    log_path = "Keylogger/logs"
+    current_dir = os.path.dirname(__file__)
+    log_path = os.path.join(current_dir, "logs")
     logs = []
 
     for filename in os.listdir(log_path):
@@ -68,7 +69,8 @@ def descifrar_log(logs):
     log_id = int(input("Introduce el ID del log que quieres descifrar: "))
     if 1 <= log_id <= len(logs):
         filename = logs[log_id - 1][0]
-        file_path = os.path.join("Keylogger/logs", filename)
+        current_dir = os.path.dirname(__file__)
+        file_path = os.path.join(current_dir, "logs", filename)
         decrypt_log_file(file_path)
     else:
         print("ID de log no válido.")

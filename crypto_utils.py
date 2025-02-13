@@ -5,7 +5,7 @@ from Crypto.Cipher import AES
 from Crypto.Protocol.KDF import PBKDF2
 
 # Configuración
-KEY_FILE = "forensic_key.json"
+KEY_FILE = os.path.join(os.path.dirname(__file__), "forensic_key.json")
 SALT_SIZE = 16
 ITERATIONS = 100000
 AES_KEY_SIZE = 32

